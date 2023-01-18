@@ -5,10 +5,12 @@ export default function Header(props) {
 
   console.log(props);
 
+  const { appName } = props;
+
   return (
     <View>
       <Text>====================================</Text>
-      <Text>Welcome to {props.appName}</Text>
+      <Text>Welcome to {appName}</Text>
     </View>
   )
 }
