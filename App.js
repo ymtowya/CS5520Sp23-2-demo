@@ -12,10 +12,10 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-      <Header appName = "my app Yumii"></Header>
-      <Header appName = "your app Jiora"></Header>
+      <Header appName = "my app Yumii" color="black"></Header>
+      <Header appName = "your app Jiora" color="green"></Header>
       <Header appName = "their app Domineo" color = "red"></Header>
-      <Header appName = {appName}></Header>
+      <Header appName = {appName} color="purple"></Header>
       <StatusBar style="auto" />
 
     </View>

@@ -1,11 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function Header(props) {
+export default function Header({ appName, color }) {
 
-  console.log(props);
-
-  const { appName } = props;
+  console.log(color);
 
   return (
     <View>
