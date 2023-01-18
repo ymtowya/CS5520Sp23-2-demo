@@ -1,11 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar'; // imported from community package
 import { StyleSheet, Text, View } from 'react-native';
+import Header from './components/Header';
+
+// Don't forget the tunnel argument!
+// npx expo start --tunnel
 
 export default function App() {
+
+  const appName = 'that app Eiwta';
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+
+      <Header appName = "my app Yumii"></Header>
+      <Header appName = "your app Jiora"></Header>
+      <Header appName = "their app Domineo" color = "red"></Header>
+      <Header appName = {appName}></Header>
       <StatusBar style="auto" />
+
     </View>
   );
 }
