@@ -1,5 +1,6 @@
-import { View, TextInput, Text } from 'react-native'
+import { View, TextInput, Text, Button } from 'react-native'
 import React, { useState } from 'react'
+import myStyles from '../styles';
 
 export default function Input({ sendChangedText }) {
 
@@ -14,9 +15,21 @@ export default function Input({ sendChangedText }) {
         <TextInput
             value={number}
             onChangeText={changeTextHandler}
-            style={{backgroundColor: 'yellow', position: 'center'}}
+            style={{backgroundColor: 'pink'}}
             placeholder='Type your content here'
         ></TextInput>
+
+        <View style={myStyles.textContainer}>
+          <Text style={myStyles.textStyle}>
+            ejskncxqlmxqop adljncpoa bsajkdni
+          </Text>
+        </View>
+
+        <View>
+          <Button title='Test here'
+            onPress={() => {} }
+          ></Button>
+        </View>
     </View>
   )
 }
