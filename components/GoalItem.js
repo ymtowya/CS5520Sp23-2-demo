@@ -1,5 +1,12 @@
 import { Button, FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import myStyles from '../styles';
+import PressableButton from './PressableButton';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { AntDesign } from '@expo/vector-icons';
+
+
+
+
 export default function GoalItem(props) {
     const t = props.item;
     const d = props.onDelete;
@@ -7,7 +14,7 @@ export default function GoalItem(props) {
 
     let onP2 = function p2() {
         // console.log("Pressed!");
-        onGoalPress();
+        // onGoalPress();
     };
     
     const android_ripple_config = {
@@ -38,13 +45,24 @@ export default function GoalItem(props) {
                     {Math.floor(t.key*100)} - {t.text}
                 </Text>
                 
-                <Button 
+                {/* <Button 
                     title='X'
                     onPress={() => {
                         // d(t.key);
                     }}
                     color={'grey'}
-                ></Button>
+                ></Button> */}
+
+                <PressableButton
+                    buttonPressed={() => {
+                        onGoalPress();
+                    }}
+                    customizedStyle={myStyles.toPressButton}
+                    buttonText={'X'}
+                >
+                    {/* <Ionicons name='md-checkmark-circle' size={18}></Ionicons> */}
+                    <AntDesign name="verticleleft" size={24} color="black" />
+                </PressableButton>
 
         </Pressable>
         </View>

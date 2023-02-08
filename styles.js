@@ -30,6 +30,14 @@ const myStyles = {
     },
     notPressedArea: {
         borderColor: 'black'
+    },
+    toPressButton: {
+        backgroundColor: 'grey',
+        padding: 10,
+        alignItems: 'center',
+    },
+    pressedButton: {
+        backgroundColor: '#E5FFCC'
     }
 };
 

@@ -4,6 +4,7 @@ import { Button, FlatList, ScrollView, StyleSheet, Text, View } from 'react-nati
 import GoalItem from './components/GoalItem';
 import Header from './components/Header';
 import Input from './components/Input';
+import PressableButton from './components/PressableButton';
 import myStyles from './styles';
 
 // Don't forget the tunnel argument!
@@ -35,14 +36,27 @@ export default function App() {
     console.log("This one is pressed: " + Math.floor(item.key * 100));
   }
 
+  function cancelPressed() {
+    // setGoals((goals) => []);
+    setInputMemo('');
+  }
+
   return (
     <View style={styles.container}>
 
       <Header appName = {appName} color="blue"></Header>
       <StatusBar style="auto" />
-      <Input sendChangedText={onTextEntered}></Input>
+      <Input 
+        sendChangedText={onTextEntered}
+        cancelPressed={cancelPressed}
+      ></Input>
       <Text>{inputMemo}</Text>
-      <Button title='Test' onPress={onp}></Button>
+
+      {/* <Button title='Test' onPress={onp}></Button> */}
+      <PressableButton buttonPressed={onp} buttonText={'TEST 2'}>
+        <Text>TEST 2</Text>
+      </PressableButton>
+
       <View style={myStyles.parent}>
         <FlatList
           data={goals}

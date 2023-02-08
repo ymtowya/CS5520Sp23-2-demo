@@ -1,8 +1,9 @@
 import { View, TextInput, Text, Button } from 'react-native'
 import React, { useState } from 'react'
 import myStyles from '../styles';
+import PressableButton from './PressableButton';
 
-export default function Input({ sendChangedText }) {
+export default function Input({ sendChangedText, cancelPressed }) {
 
   const [number, setNumber] = useState(7);
 
@@ -11,7 +12,11 @@ export default function Input({ sendChangedText }) {
     sendChangedText(text);
   }
   return (
-    <View>
+    <View
+        style={{
+          alignItems: 'center'
+        }}
+    >
         <TextInput
             value={number}
             onChangeText={changeTextHandler}
@@ -24,6 +29,18 @@ export default function Input({ sendChangedText }) {
             ejskncxqlmxqop adljncpoa bsajkdni
           </Text>
         </View> */}
+
+        <PressableButton
+          buttonPressed={() => {
+            cancelPressed();
+          }}
+        >
+          <Text>
+            Cancel
+          </Text>
+        </PressableButton>
+
+        
 
         {/* <View>
           <Button title='Test here'
