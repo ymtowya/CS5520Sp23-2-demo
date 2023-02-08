@@ -31,6 +31,10 @@ export default function App() {
     });
   }
 
+  function onPressArea(item) {
+    console.log("This one is pressed: " + Math.floor(item.key * 100));
+  }
+
   return (
     <View style={styles.container}>
 
@@ -44,7 +48,10 @@ export default function App() {
           data={goals}
           contentContainerStyle={myStyles.buttomContainer}
           renderItem={(g) => {return (
-            <GoalItem item={g.item} onDelete={onDelPress}></GoalItem>
+            <GoalItem 
+              item={g.item} 
+              onDelete={onDelPress}
+              onGoalPress={() => { onPressArea(g.item); } }></GoalItem>
           
           // <View style={myStyles.unit} key={g.item.key}>
           //   <Text>
