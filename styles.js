@@ -10,6 +10,20 @@ const myStyles = {
         fontSize: 20,
         borderRadius: 5,
         color: 'white'
+    },
+    buttomContainer: {
+        alignItems: 'center',
+    },
+    unit: {
+        height: 40,
+        backgroundColor: 'yellow',
+        margin: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    parent: {
+        height: 350,
     }
 };
 
