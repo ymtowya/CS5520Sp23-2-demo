@@ -19,20 +19,30 @@ export default function GoalItem(props) {
 
     return (
         <View key={t.key}
+            // style={}
         >
         <Pressable
-            style={myStyles.unit}
+            style={( {pressed} ) => {
+                // console.log(pressed);
+                if (pressed) {
+                    return [myStyles.unit, myStyles.pressedArea];
+                } else {
+                    return [myStyles.unit, myStyles.notPressedArea];
+                }
+                // !!!Return an array, not wrap the function in an array. That's my biggest BUG!!!
+            }}
             onPressIn={() => { onP2(); }}
-            android_ripple={android_ripple_config}
+            // android_ripple={android_ripple_config}
         >
-            
                 <Text>
                     {Math.floor(t.key*100)} - {t.text}
                 </Text>
                 
                 <Button 
                     title='X'
-                    onPress={() => {d(t.key);}}
+                    onPress={() => {
+                        // d(t.key);
+                    }}
                     color={'grey'}
                 ></Button>
 

@@ -24,6 +24,12 @@ const myStyles = {
     },
     parent: {
         height: 350,
+    },
+    pressedArea: {
+        backgroundColor: 'red',
+    },
+    notPressedArea: {
+        borderColor: 'black'
     }
 };
 
