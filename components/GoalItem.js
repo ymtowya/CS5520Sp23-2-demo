@@ -4,9 +4,6 @@ import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { AntDesign } from '@expo/vector-icons';
 
-
-
-
 export default function GoalItem(props) {
     const t = props.item;
     const d = props.onDelete;
@@ -61,11 +58,9 @@ export default function GoalItem(props) {
                     buttonText={'X'}
                 >
                     {/* <Ionicons name='md-checkmark-circle' size={18}></Ionicons> */}
-                    <AntDesign name="verticleleft" size={24} color="black" />
+                    <AntDesign name="retweet" size={24} color="black" />
                 </PressableButton>
-
         </Pressable>
         </View>
-        
     );
 };
