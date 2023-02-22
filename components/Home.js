@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar'; // imported from community package
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import GoalItem from './GoalItem';
 import Header from './Header';
 import Input from './Input';
 import PressableButton from './PressableButton';
 import myStyles from '../styles';
+import { deletefromDb, writeToDB } from '../FIREBASE/FireStoreHelper';
+import { collection, query, where, onSnapshot, deleteDoc } from "firebase/firestore";
+import { firestore } from '../FIREBASE/firebase-setup';
+
+
 
 // Don't forget the tunnel argument!
 // npx expo start --tunnel
@@ -20,13 +25,39 @@ export default function Home({navigation}) {
     setInputMemo(text);
   }
 
+  useEffect(() => {
+      
+      const unsubscribe = onSnapshot(collection(firestore, "goals"), (querySnapShot) => {
+        if (querySnapShot.empty) {
+          setGoals([]);
+        } else {
+          let goalsfromdb = [];
+          querySnapShot.docs.forEach((snapDoc) => {
+            goalsfromdb.push({...snapDoc.data(), id: snapDoc.id});
+          });
+          setGoals(goalsfromdb);
+        }
+        // console.log(JSON.stringify(querySnapShot.docs[0]));
+      });
+      // return a clean up func
+      return () => {
+        // detach listener
+        unsubscribe();
+      }
+  }, []); // dependency arr
+
+  
+
   function onp() {
     const newGoal = {text: inputMemo, key: Math.random()};
-    setGoals((pgoals) => [...pgoals, newGoal]); // pass in a function instead of the value if we want to update it based on previous value
+    // setGoals((pgoals) => [...pgoals, newGoal]); // pass in a function instead of the value if we want to update it based on previous value
+    writeToDB({
+      data: newGoal
+    });
   }
 
   function onDelPress(deletedId) {
-    // console.log('Delete tihs one ', deletedId);
+    console.log('Delete tihs one ', deletedId);
     setGoals((preGoal) => {
       return preGoal.filter((g) => {return g.key !== deletedId})
     });
@@ -34,13 +65,15 @@ export default function Home({navigation}) {
 
   function onPressArea(item) {
     console.log("This one is pressed: " + Math.floor(item.key * 100));
+    // onDelPress(item.key);
+    deletefromDb({docid: item.id});
   }
 
   function cancelPressed() {
     // setGoals((goals) => []);
     setInputMemo('');
     navigation.navigate('Details', { txt: 'yugyuguj' });
-    
+
   }
 
   return (
@@ -65,7 +98,7 @@ export default function Home({navigation}) {
           contentContainerStyle={myStyles.buttomContainer}
           renderItem={(g) => {return (
             <GoalItem 
-              item={g.item} 
+              item={g.item}
               onDelete={onDelPress}
               onGoalPress={() => { onPressArea(g.item); } }></GoalItem>
           
