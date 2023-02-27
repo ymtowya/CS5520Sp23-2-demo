@@ -1,4 +1,4 @@
-import { collection, addDoc, doc, deleteDoc } from "firebase/firestore"; 
+import { collection, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore"; 
 import { firestore } from "./firebase-setup";
 
 const defaultCollectId = 'goals';
@@ -27,5 +27,9 @@ export async function deletefromDb({ docid }) {
     }
     
 };
+
+export async function updatefromDb({ docid, data }) {
+
+}
 
 
