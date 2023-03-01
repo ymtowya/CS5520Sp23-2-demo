@@ -72,8 +72,8 @@ export default function Home({navigation}) {
   function cancelPressed() {
     // setGoals((goals) => []);
     setInputMemo('');
-    navigation.navigate('Details', { txt: 'yugyuguj' });
-
+    //navigation.navigate('Details', { txt: 'yugyuguj' });
+    navigation.navigate('Users', { txt: 'yugyuguj' });
   }
 
   return (

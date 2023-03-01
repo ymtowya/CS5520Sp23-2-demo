@@ -10,6 +10,7 @@ import myStyles from './styles';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GoDetails from './components/GoDetails';
+import GoalUsers from './components/GoalUsers';
 
 // Don't forget the tunnel argument!
 // npx expo start --tunnel
@@ -23,6 +24,7 @@ export default function App() {
     >
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Users" component={GoalUsers} />
         <Stack.Screen name="Details" component={GoDetails} 
           options={({ route }) => {
             // console.log(data);
