@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'; // imported from community package
 import { useEffect, useState } from 'react';
-import { Button, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, View, Dimensions } from 'react-native';
 import GoalItem from './GoalItem';
 import Header from './Header';
 import Input from './Input';
@@ -10,7 +10,10 @@ import { deletefromDb, writeToDB } from '../FIREBASE/FireStoreHelper';
 import { collection, query, where, onSnapshot, deleteDoc } from "firebase/firestore";
 import { firestore } from '../FIREBASE/firebase-setup';
 
+// "portrait"
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 // Don't forget the tunnel argument!
 // npx expo start --tunnel
@@ -78,20 +81,19 @@ export default function Home({navigation}) {
 
   return (
     <View style={styles.container}>
-
-      <Header appName = {appName} color="blue"></Header>
-      <StatusBar style="auto" />
+      {/* <StatusBar style="auto" /> */}
       <Input 
         sendChangedText={onTextEntered}
         cancelPressed={cancelPressed}
+        style={styles.inputBox}
       ></Input>
       <Text>{inputMemo}</Text>
 
-      {/* <Button title='Test' onPress={onp}></Button> */}
+      <Button title='Test' onPress={onp}></Button>
       <PressableButton buttonPressed={onp} buttonText={'TEST 2'}>
         <Text>TEST 2</Text>
       </PressableButton>
-
+      <Header appName = {appName} color="blue"></Header>
       <View style={myStyles.parent}>
         <FlatList
           data={goals}
@@ -113,7 +115,9 @@ export default function Home({navigation}) {
           )}}
         >
         </FlatList>
-        {/* <ScrollView contentContainerStyle={myStyles.buttomContainer}
+
+      </View>
+              {/* <ScrollView contentContainerStyle={myStyles.buttomContainer}
           alwaysBounceVertical={true}
         >
           {
@@ -127,9 +131,8 @@ export default function Home({navigation}) {
             })
           }
         </ScrollView> */}
-      </View>
-
     </View>
+    
   );
 }
 
@@ -139,5 +142,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
+  inputBox: {
+    width: 390,
+    backgroundColor: '#11aa22',
+
+  }
 });

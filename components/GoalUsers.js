@@ -52,7 +52,9 @@ export default function GoalUsers(props) {
                 throw new Error("HTTP error");
             }
             let resp = await response.json();
-            setUserNames((prev) => {return [...prev, resp.name];});
+            setUserNames((prev) => {
+                return [...prev, resp.name];
+            }); // setState upon prev
             console.log(resp);
             // console.log(response);
         } catch (error) {
