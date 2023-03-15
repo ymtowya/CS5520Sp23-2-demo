@@ -82,7 +82,13 @@ export default function Home({navigation}) {
   return (
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}
-      <Input 
+
+      <Button title="Login" onPress={() => { 
+        console.log("DHSUHSDID");
+        navigation.navigate("Login"); 
+        }} />
+
+      {/* <Input 
         sendChangedText={onTextEntered}
         cancelPressed={cancelPressed}
         style={styles.inputBox}
@@ -93,7 +99,7 @@ export default function Home({navigation}) {
       <PressableButton buttonPressed={onp} buttonText={'TEST 2'}>
         <Text>TEST 2</Text>
       </PressableButton>
-      <Header appName = {appName} color="blue"></Header>
+      <Header appName = {appName} color="blue"></Header> */}
       <View style={myStyles.parent}>
         <FlatList
           data={goals}
