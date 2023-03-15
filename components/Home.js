@@ -8,7 +8,8 @@ import PressableButton from './PressableButton';
 import myStyles from '../styles';
 import { deletefromDb, writeToDB } from '../FIREBASE/FireStoreHelper';
 import { collection, query, where, onSnapshot, deleteDoc } from "firebase/firestore";
-import { firestore } from '../FIREBASE/firebase-setup';
+import { auth, firestore } from '../FIREBASE/firebase-setup';
+import { signOut } from 'firebase/auth';
 
 // "portrait"
 
@@ -83,9 +84,9 @@ export default function Home({navigation}) {
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}
 
-      <Button title="Login" onPress={() => { 
+      <Button title="Sign Out" onPress={() => { 
         console.log("DHSUHSDID");
-        navigation.navigate("Login"); 
+        signOut(auth);
         }} />
 
       {/* <Input 
