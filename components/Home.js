@@ -8,8 +8,10 @@ import PressableButton from './PressableButton';
 import myStyles from '../styles';
 import { deletefromDb, writeToDB } from '../FIREBASE/FireStoreHelper';
 import { collection, query, where, onSnapshot, deleteDoc } from "firebase/firestore";
-import { auth, firestore } from '../FIREBASE/firebase-setup';
+import { auth, firestore, storage } from '../FIREBASE/firebase-setup';
 import { signOut } from 'firebase/auth';
+import ImageManager from './ImageManager';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 
 // "portrait"
 
@@ -25,29 +27,34 @@ export default function Home({navigation}) {
 
   const [inputMemo, setInputMemo] = useState('');
   const [goals, setGoals] = useState([]);
-  function onTextEntered(text) {
-    setInputMemo(text);
+  function onTextEntered(dataFromInput) {
+    setInputMemo(dataFromInput.text);
+    // get url
+    // pass url too
   }
 
   useEffect(() => {
+
+    const q = query(collection(firestore, "goals"), where("user", "==", auth.currentUser.uid));
       
-      const unsubscribe = onSnapshot(collection(firestore, "goals"), (querySnapShot) => {
-        if (querySnapShot.empty) {
-          setGoals([]);
-        } else {
-          let goalsfromdb = [];
-          querySnapShot.docs.forEach((snapDoc) => {
-            goalsfromdb.push({...snapDoc.data(), id: snapDoc.id});
-          });
-          setGoals(goalsfromdb);
-        }
-        // console.log(JSON.stringify(querySnapShot.docs[0]));
-      });
-      // return a clean up func
-      return () => {
-        // detach listener
-        unsubscribe();
+    const unsubscribe = onSnapshot(q, (querySnapShot) => {
+      if (querySnapShot.empty) {
+        setGoals([]);
+      } else {
+        let goalsfromdb = [];
+        querySnapShot.docs.forEach((snapDoc) => {
+          goalsfromdb.push({...snapDoc.data(), id: snapDoc.id});
+        });
+        setGoals(goalsfromdb);
       }
+      // console.log(JSON.stringify(querySnapShot.docs[0]));
+    });
+    // return a clean up func
+    return () => {
+      // detach listener
+      unsubscribe();
+    }
+
   }, []); // dependency arr
 
   
@@ -80,6 +87,29 @@ export default function Home({navigation}) {
     navigation.navigate('Users', { txt: 'yugyuguj' });
   }
 
+  async function fetchImage(uri) {
+    try {
+      const resp = await fetch(uri);
+      const imageBlob  = await resp.blob();
+      const imgName = uri.substring(uri.lastIndexOf('/') + 1);
+      console.log(storage);
+      const imageRef = await ref(storage, `images/${imgName}`);
+      const uploadRes = await uploadBytesResumable(imageRef, imageBlob);
+      return uploadRes.metadata.fullPath;
+    } catch (error) {
+     console.error(error); 
+    }
+    
+  }
+
+  async function imageUriHandler(uri) {
+    console.log("URI: ", uri);
+    if (uri) {
+      const img = await fetchImage(uri);
+      
+    }
+  }
+
   return (
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}
@@ -89,18 +119,23 @@ export default function Home({navigation}) {
         signOut(auth);
         }} />
 
-      {/* <Input 
-        sendChangedText={onTextEntered}
+      <Input 
+        sendChangedText={(t) => {
+          onTextEntered(t);
+        }}
         cancelPressed={cancelPressed}
         style={styles.inputBox}
+        imageUriHandler={imageUriHandler}
       ></Input>
-      <Text>{inputMemo}</Text>
+
+      
+      {/* <Text>{inputMemo}</Text> */}
 
       <Button title='Test' onPress={onp}></Button>
-      <PressableButton buttonPressed={onp} buttonText={'TEST 2'}>
+      {/* <PressableButton buttonPressed={onp} buttonText={'TEST 2'}>
         <Text>TEST 2</Text>
-      </PressableButton>
-      <Header appName = {appName} color="blue"></Header> */}
+      </PressableButton> */}
+      {/* <Header appName = {appName} color="blue"></Header> */}
       <View style={myStyles.parent}>
         <FlatList
           data={goals}

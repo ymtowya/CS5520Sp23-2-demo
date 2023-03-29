@@ -2,8 +2,11 @@ import { View, TextInput, Text, Button } from 'react-native'
 import React, { useState } from 'react'
 import myStyles from '../styles';
 import PressableButton from './PressableButton';
+import ImageManager from './ImageManager';
 
-export default function Input({ sendChangedText, cancelPressed }) {
+export default function Input({ sendChangedText, cancelPressed, imageUriHandler }) {
+
+  const [imgUri, setImgUri] = useState('');
 
   const [number, setNumber] = useState(7);
 
@@ -11,6 +14,12 @@ export default function Input({ sendChangedText, cancelPressed }) {
     setNumber(text);
     sendChangedText(text);
   }
+
+  const imageUriHandler2 = (uri) => {
+    setImgUri(uri);
+  }
+
+
   return (
     <View
         style={{
@@ -40,6 +49,9 @@ export default function Input({ sendChangedText, cancelPressed }) {
           </Text>
         </PressableButton>
 
+        <ImageManager 
+          imageUriHandler={imageUriHandler}
+        />
         
 
         {/* <View>

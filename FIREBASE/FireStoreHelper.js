@@ -1,5 +1,6 @@
+import { uuidv4 } from "@firebase/util";
 import { collection, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore"; 
-import { firestore } from "./firebase-setup";
+import { auth, firestore } from "./firebase-setup";
 
 const defaultCollectId = 'goals';
 
@@ -11,6 +12,7 @@ export async function writeToDB({ collectId, data }) {
     // fix error
     try {
         // must have await to wait for return
+        data.user = auth.currentUser.uid;
         const docRef = await addDoc(collection(firestore, defaultCollectId), data);
         console.log("Document written with ID: ", docRef.id);
     } catch (err) {
